@@ -1,0 +1,28 @@
+{
+  "name": "redux-social-network",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavPO/redux-social-network.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GavPO/redux-social-network/issues"
+  },
+  "homepage": "https://github.com/GavPO/redux-social-network#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "gravatar": "^1.8.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
+  }
+}
