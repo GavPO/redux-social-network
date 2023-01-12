@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd server && node server.js --ignore client",
+    "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,7 @@
     "dotenv": "^16.0.3",
     "gravatar": "^1.8.2"
   },
+  
   "devDependencies": {
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
