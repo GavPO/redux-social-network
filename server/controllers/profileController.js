@@ -91,11 +91,26 @@ async function addProfileExperience(req, res) {
   }
 }
 
+async function deleteExperience(req, res) {
+  try {
+    const userProfile = await Profile.findOneAndUpdate(
+      { user: req.user.id },
+      { $pull: { experiences: req.params.expId } },
+      { new: true }
+    );
+    res.status(200).json(userProfile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   getAllProfiles,
   getProfile,
   getProfileById,
   createProfile,
   updateProfile,
-  addProfileExperience
+  addProfileExperience,
+  deleteExperience,
 };

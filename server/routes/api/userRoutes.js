@@ -13,7 +13,5 @@ router.route("/").get(authMiddleware, getAllUsers).post(createUser).delete(authM
 router.route("/:id").get(authMiddleware, getUserById);
 router.route("/login").post(loginUser);
 
-// /api/users/:userId
-// router.route("/:userId").get(getUserById).put(updateUser).delete(deleteUser);
 
 module.exports = router;
