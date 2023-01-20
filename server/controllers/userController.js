@@ -1,6 +1,7 @@
 const User = require("../models/User");
+const Profile = require("../models/Profile");
 const { signToken } = require("../utils/auth");
-const gravatar = require('gravatar')
+const gravatar = require('gravatar');
 
 async function getAllUsers(req, res) {
   try {
@@ -78,6 +79,17 @@ async function createUser(req, res) {
       res.status(500).json(err);
     }
   }
+
+  async function deleteUser(req, res) {
+    try {
+      const deletedUser = await User.findByIdAndDelete(req.user.id);
+      await Profile.findOneAndDelete({ user: req.user.id });
+      res.status(200).json(deletedUser)
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  }
   
 
   module.exports = {
@@ -85,4 +97,5 @@ async function createUser(req, res) {
     getUserById,
     createUser,
     loginUser,
+    deleteUser,
   }
