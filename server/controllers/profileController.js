@@ -91,7 +91,7 @@ async function addProfileExperience(req, res) {
   }
 }
 
-async function deleteExperience(req, res) {
+async function deleteProfileExperience(req, res) {
   try {
     const userProfile = await Profile.findOneAndUpdate(
       { user: req.user.id },
@@ -105,6 +105,35 @@ async function deleteExperience(req, res) {
   }
 }
 
+async function addProfileEducation(req, res) {
+    try {
+      const userProfile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $addToSet: { education: req.body } },
+        { new: true }
+      );
+  
+      res.status(200).json(userProfile);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  }
+  
+  async function deleteProfileEducation(req, res) {
+    try {
+      const userProfile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $pull: { education: req.params.eduId } },
+        { new: true }
+      );
+      res.status(200).json(userProfile);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  }
+
 module.exports = {
   getAllProfiles,
   getProfile,
@@ -112,5 +141,7 @@ module.exports = {
   createProfile,
   updateProfile,
   addProfileExperience,
-  deleteExperience,
+  deleteProfileExperience,
+  addProfileEducation,
+  deleteProfileEducation,
 };
