@@ -136,7 +136,7 @@ async function addProfileEducation(req, res) {
 
   async function getGitHubRepos(req, res) {
     try {
-        const response = fetch(`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUBCLIENTID}&client_secret=${process.env.GITHUBCLIENTSECRET}`, {
+        const response = await fetch(`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUBCLIENTID}&client_secret=${process.env.GITHUBCLIENTSECRET}`, {
             headers: {
                 'user-agent': 'node.js'
             }
