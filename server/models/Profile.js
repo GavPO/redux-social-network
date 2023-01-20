@@ -1,5 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
-const User = require('./User')
+const User = require('./User');
+const educationSchema = require('./Education');
+const experienceSchema = require('./Experience');
 
 const profileSchema = new Schema({
     user: {
@@ -29,61 +31,8 @@ const profileSchema = new Schema({
     github: {
         type: String
     },
-    experiences: [{
-        title: {
-            type: String,
-            required: true
-        },
-        company: {
-            type: String,
-            required: true
-        },
-        location: {
-            type: String
-        },
-        from: {
-            type: Date,
-            required: true
-        },
-        to: {
-            type: Date
-        },
-        current: {
-            type: Boolean,
-            default: false
-        },
-        description: {
-            type: String
-        }
-    }],
-    education: [{
-        school: {
-            type: String,
-            required: true
-        },
-        degree: {
-            type: String,
-            required: true
-        },
-        fieldOfStudy: {
-            type: String,
-            required: true
-        },
-        from: {
-            type: Date,
-            required: true
-        },
-        to: {
-            type: Date
-        },
-        current: {
-            type: Boolean,
-            default: false
-        },
-        description: {
-            type: String
-        }
-    }],
+    experiences: [experienceSchema],
+    education: [educationSchema],
     socials: {
         youtube: {
             type: String

@@ -76,10 +76,26 @@ async function updateProfile(req, res) {
   }
 }
 
+async function addProfileExperience(req, res) {
+  try {
+    const userProfile = await Profile.findOneAndUpdate(
+      { user: req.user.id },
+      { $addToSet: { experiences: req.body } },
+      { new: true }
+    );
+
+    res.status(200).json(userProfile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   getAllProfiles,
   getProfile,
   getProfileById,
   createProfile,
   updateProfile,
+  addProfileExperience
 };
