@@ -33,7 +33,26 @@ async function createProfile(req, res) {
   }
 }
 
+async function updateProfile(req, res) {
+  try {
+    const profileFields = { ...req.body };
+    profileFields.skills = req.body.skills
+      .split(",")
+      .map((skill) => skill.trim());
+    const updatedProfile = Profile.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: profileFields },
+      { new: true }
+    );
+    res.status(200).json(updatedProfile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 module.exports = {
   getProfile,
   createProfile,
+  updateProfile
 };
