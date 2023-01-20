@@ -10,6 +10,7 @@ const {
   deleteProfileExperience,
   addProfileEducation,
   deleteProfileEducation,
+  getGitHubRepos,
 } = require("../../controllers/profileController");
 
 router.route("/me").get(authMiddleware, getProfile);
@@ -22,6 +23,8 @@ router.route('/experience/:expId').delete(authMiddleware, deleteProfileExperienc
 
 router.route('/education').put(authMiddleware, addProfileEducation)
 router.route('/education/:eduId').delete(authMiddleware, deleteProfileEducation)
+
+router.route('/github/:username').get(getGitHubRepos)
 
 
 module.exports = router;

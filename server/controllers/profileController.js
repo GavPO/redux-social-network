@@ -134,6 +134,21 @@ async function addProfileEducation(req, res) {
     }
   }
 
+  async function getGitHubRepos(req, res) {
+    try {
+        const response = fetch(`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUBCLIENTID}&client_secret=${process.env.GITHUBCLIENTSECRET}`, {
+            headers: {
+                'user-agent': 'node.js'
+            }
+        });
+        await response.json();
+        res.status(200).json(response);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+  }
+
 module.exports = {
   getAllProfiles,
   getProfile,
@@ -144,4 +159,5 @@ module.exports = {
   deleteProfileExperience,
   addProfileEducation,
   deleteProfileEducation,
+  getGitHubRepos
 };
