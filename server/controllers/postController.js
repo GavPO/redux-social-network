@@ -13,6 +13,17 @@ async function getAllPosts(req, res) {
     }
 }
 
+async function getPostById(req, res) {
+    try{
+        const singlePost = await Post.findById(req.params.postId);
+
+        res.status(200).json(singlePost);
+    } catch (err) {
+        console.error(err);
+        res.status(200).json(err);
+    }
+}
+
 async function createPost(req, res) {
   try {
     const user = await User.findById(req.user.id);
@@ -33,9 +44,12 @@ async function createPost(req, res) {
 
 async function deletePost(req, res) {
     try {
-        const deletedPost = Post.findByIdAndDelete(req.params.postId);
-
-        res.status(200).json(deletedPost);
+        const post = Post.findById(req.params.postId)
+        if (post.user._id !== req.user.id) {
+            return res.status(401).json({ message: "Not authorized" })
+        }
+        await Post.findByIdAndDelete(req.params.postId)
+        res.status(200).json(post);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
@@ -44,6 +58,7 @@ async function deletePost(req, res) {
 
 module.exports = {
     getAllPosts,
+    getPostById,
     createPost,
     deletePost
 }
