@@ -56,9 +56,37 @@ async function deletePost(req, res) {
     }
 }
 
+async function addLike(req, res) {
+    try {
+        const likedPost = await Post.findById(req.params.postId);
+        if(likedPost.likes.filter(like => like.user._id === req.user.id).length > 0) {
+            return res.status(400).json({ message: "Post already liked" })
+        };
+
+        await Post.findOneAndUpdate(
+            { _id: req.params.postId },
+            { $addToSet: { likes: req.user.id }},
+            { new: true },
+        );
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+}
+
+async function removeLike(req, res) {
+    try {
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+}
+
 module.exports = {
     getAllPosts,
     getPostById,
     createPost,
-    deletePost
+    deletePost,
+    addLike
 }
