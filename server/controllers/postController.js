@@ -120,6 +120,27 @@ async function addComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+    try {
+        const post = Post.findById(req.params.postId);
+        const comment = post.comments.find(comment => comment._id === req.params.commentId)
+        if (comment.user._id !== req.user.id) {
+          return res.status(401).json({ message: "Not authorized" });
+        }
+
+    await Post.findOneAndUpdate(
+        { _id: req.params.postId },
+        { $pull: { comments: req.params.commentId } },
+        { new: true }
+      );
+  
+      res.status(200).json(post);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  }
+
 module.exports = {
   getAllPosts,
   getPostById,
@@ -127,5 +148,6 @@ module.exports = {
   deletePost,
   addLike,
   removeLike,
-  addComment
+  addComment,
+  deleteComment
 };

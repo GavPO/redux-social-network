@@ -7,6 +7,8 @@ const {
   getPostById,
   addLike,
   removeLike,
+  addComment,
+  deleteComment,
 } = require("../../controllers/postController");
 
 router
@@ -21,5 +23,8 @@ router
 
 router.route("/like").put(authMiddleware, addLike);
 router.route("/unlike").put(authMiddleware, removeLike);
+
+router.route("/comment/:postId").put(authMiddleware, addComment);
+router.route("/comment/:postId/:commentId").delete(authMiddleware, deleteComment);
 
 module.exports = router;
