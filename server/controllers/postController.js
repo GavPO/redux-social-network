@@ -4,7 +4,7 @@ const Profile = require('../models/Profile');
 
 async function getAllPosts(req, res) {
     try {
-        const allPosts = await Post.find();
+        const allPosts = await Post.find().sort({ date: -1 });
 
         res.status(200).json(allPosts)
     } catch (err) {
@@ -31,7 +31,19 @@ async function createPost(req, res) {
   }
 }
 
+async function deletePost(req, res) {
+    try {
+        const deletedPost = Post.findByIdAndDelete(req.params.postId);
+
+        res.status(200).json(deletedPost);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+}
+
 module.exports = {
     getAllPosts,
     createPost,
+    deletePost
 }
