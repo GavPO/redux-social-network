@@ -1,6 +1,19 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 
+async function getAllProfiles(req, res) {
+  try {
+    const allProfiles = await Profile.find().populate("user", [
+      "username",
+      "avatar",
+    ]);
+    res.status(200).json(allProfiles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 async function getProfile(req, res) {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate(
@@ -19,13 +32,25 @@ async function getProfile(req, res) {
   }
 }
 
+async function getProfileById(req, res) {
+  try {
+    const singleProfile = await Profile.findOne({
+      user: req.params.userId,
+    }).populate("user", ["username", "avatar"]);
+    res.status(200).json(singleProfile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+}
+
 async function createProfile(req, res) {
   try {
     const profileFields = { ...req.body };
     profileFields.skills = req.body.skills
       .split(",")
       .map((skill) => skill.trim());
-    const newProfile = Profile.create(profileFields);
+    const newProfile = await Profile.create(profileFields);
     res.status(200).json(newProfile);
   } catch (err) {
     console.error(err);
@@ -39,7 +64,7 @@ async function updateProfile(req, res) {
     profileFields.skills = req.body.skills
       .split(",")
       .map((skill) => skill.trim());
-    const updatedProfile = Profile.findOneAndUpdate(
+    const updatedProfile = await Profile.findOneAndUpdate(
       { _id: req.user.id },
       { $set: profileFields },
       { new: true }
@@ -52,7 +77,9 @@ async function updateProfile(req, res) {
 }
 
 module.exports = {
+  getAllProfiles,
   getProfile,
+  getProfileById,
   createProfile,
-  updateProfile
+  updateProfile,
 };

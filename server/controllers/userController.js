@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { authMiddleware, signToken } = require("../utils/auth");
+const { signToken } = require("../utils/auth");
 const gravatar = require('gravatar')
 
 async function getAllUsers(req, res) {
@@ -16,7 +16,7 @@ async function getAllUsers(req, res) {
 
   async function getUserById(req, res) {
     try {
-      const singleUser = await User.findById(req.params.userId)
+      const singleUser = await User.findById(req.user.id)
         .select("-__v")
         .select("-password")
       res.status(200).json(singleUser);
