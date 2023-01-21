@@ -16,15 +16,17 @@ router
   .get(authMiddleware, getAllPosts)
   .post(authMiddleware, createPost);
 
+router.route("/like/:postId").put(authMiddleware, addLike);
+router.route("/unlike/:postId").put(authMiddleware, removeLike);
+
+router.route("/comment/:postId").put(authMiddleware, addComment);
+router
+  .route("/comment/:postId/:commentId")
+  .delete(authMiddleware, deleteComment);
+
 router
   .route("/:postId")
   .get(authMiddleware, getPostById)
   .delete(authMiddleware, deletePost);
-
-router.route("/like").put(authMiddleware, addLike);
-router.route("/unlike").put(authMiddleware, removeLike);
-
-router.route("/comment/:postId").put(authMiddleware, addComment);
-router.route("/comment/:postId/:commentId").delete(authMiddleware, deleteComment);
 
 module.exports = router;

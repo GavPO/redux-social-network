@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+const commentSchema = require("./Comment");
 
 const postSchema = new Schema({
   user: {
@@ -25,29 +26,7 @@ const postSchema = new Schema({
       },
     },
   ],
-  comments: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-      text: {
-        type: String,
-        required: true,
-      },
-      username: {
-        type: String,
-        required: true,
-      },
-      avatar: {
-        type: String,
-        required: true,
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
+  comments: [commentSchema],
   date: {
     type: Date,
     default: Date.now,

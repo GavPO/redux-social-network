@@ -17,7 +17,7 @@ async function getAllUsers(req, res) {
 
   async function getUserById(req, res) {
     try {
-      const singleUser = await User.findById(req.user.id)
+      const singleUser = await User.findById(req.user._id)
         .select("-__v")
         .select("-password")
       res.status(200).json(singleUser);
@@ -82,8 +82,8 @@ async function createUser(req, res) {
 
   async function deleteUser(req, res) {
     try {
-      const deletedUser = await User.findByIdAndDelete(req.user.id);
-      await Profile.findOneAndDelete({ user: req.user.id });
+      const deletedUser = await User.findByIdAndDelete(req.user._id);
+      await Profile.findOneAndDelete({ user: req.user._id });
       res.status(200).json(deletedUser)
     } catch (err) {
       console.error(err);

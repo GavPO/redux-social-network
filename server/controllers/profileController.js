@@ -16,7 +16,7 @@ async function getAllProfiles(req, res) {
 
 async function getProfile(req, res) {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
+    const profile = await Profile.findOne({ user: req.user._id }).populate(
       "user",
       ["username", "avatar"]
     );
@@ -47,9 +47,11 @@ async function getProfileById(req, res) {
 async function createProfile(req, res) {
   try {
     const profileFields = { ...req.body };
+    profileFields.user = req.user._id;
     profileFields.skills = req.body.skills
       .split(",")
       .map((skill) => skill.trim());
+      console.log(profileFields)
     const newProfile = await Profile.create(profileFields);
     res.status(200).json(newProfile);
   } catch (err) {
@@ -65,7 +67,7 @@ async function updateProfile(req, res) {
       .split(",")
       .map((skill) => skill.trim());
     const updatedProfile = await Profile.findOneAndUpdate(
-      { _id: req.user.id },
+      { _id: req.user._id },
       { $set: profileFields },
       { new: true }
     );
@@ -79,7 +81,7 @@ async function updateProfile(req, res) {
 async function addProfileExperience(req, res) {
   try {
     const userProfile = await Profile.findOneAndUpdate(
-      { user: req.user.id },
+      { user: req.user._id },
       { $addToSet: { experiences: req.body } },
       { new: true }
     );
@@ -94,7 +96,7 @@ async function addProfileExperience(req, res) {
 async function deleteProfileExperience(req, res) {
   try {
     const userProfile = await Profile.findOneAndUpdate(
-      { user: req.user.id },
+      { user: req.user._id },
       { $pull: { experiences: req.params.expId } },
       { new: true }
     );
@@ -108,7 +110,7 @@ async function deleteProfileExperience(req, res) {
 async function addProfileEducation(req, res) {
     try {
       const userProfile = await Profile.findOneAndUpdate(
-        { user: req.user.id },
+        { user: req.user._id },
         { $addToSet: { education: req.body } },
         { new: true }
       );
@@ -123,7 +125,7 @@ async function addProfileEducation(req, res) {
   async function deleteProfileEducation(req, res) {
     try {
       const userProfile = await Profile.findOneAndUpdate(
-        { user: req.user.id },
+        { user: req.user._id },
         { $pull: { education: req.params.eduId } },
         { new: true }
       );
