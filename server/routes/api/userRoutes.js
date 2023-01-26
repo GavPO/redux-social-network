@@ -14,7 +14,7 @@ router
   .get(authMiddleware, getAllUsers)
   .post(createUser)
   .delete(authMiddleware, deleteUser);
-router.route("/:id").get(authMiddleware, getUserById);
 router.route("/login").post(loginUser);
+router.route("/:id").get(authMiddleware, getUserById);
 
 module.exports = router;
