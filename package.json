@@ -23,9 +23,9 @@
   "homepage": "https://github.com/GavPO/redux-social-network#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "gravatar": "^1.8.2"
+    "gravatar": "^1.8.2",
+    "uuid": "^9.0.0"
   },
-  
   "devDependencies": {
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"

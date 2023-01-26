@@ -5,10 +5,13 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
+import Alert from './components/layout/Alert';
 
 
 function App() {
   return (
+    <>
+    <Alert/>
     <Router>
     
     <Navbar/>
@@ -21,6 +24,7 @@ function App() {
 
     
     </Router>
+    </>
   );
 }
 

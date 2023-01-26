@@ -44,9 +44,9 @@ export default function Login() {
             value={password}
           />
         </div>
-        <input type="submit" classNameName="btn btn-primary" value="Login" />
+        <input type="submit" className="btn btn-primary" value="Login" />
       </form>
-      <p classNameName="my-1">
+      <p className="my-1">
         Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </section>

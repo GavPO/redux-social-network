@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import createUser from "../../utils/createUser";
+import { connect } from 'react-redux'
+import { setAlert } from '../../actions/alert'
+import PropTypes from 'prop-types'
 
-export default function Signup() {
+function Signup(props) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -18,7 +20,7 @@ export default function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // if (password != password2) console.log("Passwords do not match!");
+    if (password != password2) props.setAlert("Passwords do not match!", 'danger');
     // try {
     //   const userData = {
     //     username,
@@ -98,3 +100,9 @@ export default function Signup() {
     </section>
   );
 }
+
+Signup.propTypes = {
+    setAlert: PropTypes.func.isRequired
+}
+
+export default connect(null, { setAlert })(Signup)
